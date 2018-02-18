@@ -3,11 +3,28 @@ article {
     margin-right:20%;
     word-wrap:break-word;
 }
+img { display:block; }  
 nav ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
 nav li {
-    display: inline;
+    float:left;
+    border-right: 1px solid white;
+    
+}
+nav li:last-child {
+    border-right: none;
+}
+nav li a {
+    display: block;
+    padding: 10px;
+    color: white;
+    background-color: #8FBC8F;
+    font-size: 17px;
+    font-family: "Lucida Console", Monaco, monospace;
+}
+nav li a:hover{
+    background-color: #808080;
 }
