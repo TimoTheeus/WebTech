@@ -1,9 +1,8 @@
-article { 
-    display:block;
+article{ 
     margin-right:20%;
     word-wrap:break-word;
 }
-img { display:block; }  
+ 
 nav ul {
     list-style-type: none;
     margin: 0;
@@ -24,17 +23,30 @@ nav li a {
     background-color: #8FBC8F;
     font-size: 17px;
     font-family: "Lucida Console", Monaco, monospace;
+    text-decoration: none;
 }
 nav li a:hover{
     background-color: #808080;
+    text-decoration:underline;
+}
+nav li a.active{
+    background-color: #2F4F4F;
+    text-decoration: none;
+    cursor: default
 }
 table{
-    border: 1px solid black;
+    border-collapse: collapse;
 }
 td,th{
    border: 1px solid black;
+   padding: 10px;
+
 }
+
 th{
-    background-color: cornflowerblue;
-    color:white;
+    background-color: #FFDEAD;
+    color:black;
+}
+tr:hover{
+    background-color: #F5F5F5;
 }
