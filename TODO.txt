@@ -1,5 +1,5 @@
 style inheritance (font size ofzo in article)
-images should be on the right of the page along with figure caption
 Change the header
 Change footer
 sources page and its location
+Table of contents design
