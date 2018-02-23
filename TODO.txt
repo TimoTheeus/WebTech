@@ -1,5 +1,4 @@
 style inheritance (font size ofzo in article)
-Change the header
 Change footer
-sources page and its location
 Table of contents design
+.source style design (make sources smaller?)
