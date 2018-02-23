@@ -5,6 +5,9 @@ header {
     margin-bottom: -12px;
 }
 
+body {
+    overflow-x:hidden;
+}
 nav {
     position: sticky;
     top:0 ;
@@ -76,5 +79,12 @@ footer {
 
 aside {
     float: right;
+}
+#toc {
+    border: 1px solid black;
+    padding: 5px;
+    width:10%;
+    margin-top:5px;
+    background-color:lightcyan;
 }
 
