@@ -1,4 +1,6 @@
 nav {
+    position: sticky;
+    top:0 ;
     overflow: auto;
 }
 
@@ -9,7 +11,7 @@ nav ul {
 }
 
 nav li {
-    float:left;
+    float: left;
     border-right: 1px solid white;
 }
 
