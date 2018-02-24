@@ -55,6 +55,9 @@ article {
     word-wrap:break-word;
 }
 
+h2 {
+    font-size: 18px;
+}
 table {
     border-collapse: collapse;
 }
@@ -86,5 +89,8 @@ aside {
     width:10%;
     margin-top:5px;
     background-color:lightcyan;
+}
+.source {
+    font-size: 10px;
 }
 
