@@ -5,7 +5,7 @@ $(function() {
         var toc = $('<section>').attr('id', 'toc').html('<h3>Contents</h3>');
         var tocList = $('<ol>');
         toc.append(tocList);
-        h2s.each(function(e) {
+        h2s.each(function() {
             var txt = $(this).text();
             var id = txt.replace(/ /g, '_');
             $(this).attr('id', id);
