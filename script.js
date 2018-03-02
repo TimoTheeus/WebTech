@@ -1,16 +1,16 @@
 $(function() {
     $('a[href="' + location.pathname.split('/').pop() + '"]').addClass('active');
-    var h2s = $('article h2');
-    if (h2s.length > 0) {
-        var toc = $('<section>').attr('id', 'toc').html('<h3>Contents</h3>');
-        var tocList = $('<ol>');
-        toc.append(tocList);
-        h2s.each(function() {
+    var $h2s = $('article h2');
+    if ($h2s.length > 0) {
+        var $toc = $('<section>').attr('id', 'toc').html('<h3>Contents</h3>');
+        var $tocList = $('<ol>');
+        $toc.append($tocList);
+        $h2s.each(function() {
             var txt = $(this).text();
             var id = txt.replace(/ /g, '_');
             $(this).attr('id', id);
-            tocList.append($('<li>').html(`<a href="#${id}">${txt}</a>`));
+            $tocList.append($('<li>').html(`<a href="#${id}">${txt}</a>`));
         });
-        $('article').before(toc);
+        $('article').before($toc);
     }
 });
