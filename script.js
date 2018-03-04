@@ -9,8 +9,9 @@ $(function() {
             var txt = this.innerHTML;
             var id = txt.replace(/ /g, '_');
             this.id = id;
-            $tocList.append($('<li>').html(`<a href="#${id}">${txt}</a>`));
+            $tocList.append(`<li><a href="#${id}">${txt}</a></li>`);
         });
         $('article').before($toc);
     }
+    new Dygraph(document.getElementById('graph'), 'Fennec_vs_Red.csv', {colors: ['yellow', '#b75800']});
 });
