@@ -6,9 +6,9 @@ $(function() {
         var $tocList = $('<ol>');
         $toc.append($tocList);
         $h2s.each(function() {
-            var txt = $(this).text();
+            var txt = this.innerHTML;
             var id = txt.replace(/ /g, '_');
-            $(this).attr('id', id);
+            this.id = id;
             $tocList.append($('<li>').html(`<a href="#${id}">${txt}</a>`));
         });
         $('article').before($toc);
