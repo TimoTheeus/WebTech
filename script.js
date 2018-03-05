@@ -33,8 +33,10 @@ $(document).ready(function(){
         e.preventDefault();
         //show the contextmenu
         $(document.getElementsByClassName("customContextMenu")).addClass("show").removeClass("hidden");
+        //Change position relative to mouse position
         $(document.getElementsByClassName("customContextMenu")).css('top',e.pageY);
         $(document.getElementsByClassName("customContextMenu")).css('left',e.pageX);
+        //When clicking an option change the weight/style/color of the font accordingly
         $("#bold").click(function(){
             $(e.target).css("font-weight","bold");
         });
