@@ -8,6 +8,7 @@ header {
 body {
     overflow-x:hidden;
 }
+
 nav {
     position: sticky;
     top:0 ;
@@ -96,7 +97,35 @@ aside {
 .source {
     font-size: 10px;
 }
-
+.hidden {
+    display: none;
+}
+.show.customContextMenu {
+    position:absolute;
+    box-shadow: 3px 8px 16px 0px rgba(0,0,0,0.1);
+}
+.show.customContextMenu div {
+    display:block;
+    padding: 5px;
+    background-color: #F8F8FF;
+    width: 150px;
+    border: 1px solid black;
+    color:black;
+    position: relative;
+}
+.show.customContextMenu div:hover {
+    background-color:#4169E1;
+    color:white;
+}
+#colorDropDown {
+    display:none;
+    position:absolute;
+    padding:0px;
+    border:none;
+}
+#changeColor:hover #colorDropDown{
+    display:block;
+}
 iframe {
     border: 0;
 }
