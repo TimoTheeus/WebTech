@@ -13,13 +13,12 @@ $(function() {
     }
     
     var $menu = $('.customContextMenu');
-    //When clicking anywhere on the page that is not the contextmenu, hide the custom contextmenu
     function hideMenu() {
         $menu.addClass('hidden');
     }
-    document.addEventListener('click', hideMenu);
+    //When clicking anywhere on the page that is not the contextmenu, hide the custom contextmenu
     //Right clicking should hide it as well, but in the capturing phase in case it opens up again in bubbling
-    document.addEventListener('contextmenu', hideMenu, true);
+    ['click', 'contextmenu'].forEach(x => document.addEventListener(x, hideMenu, true));
     var target;
     //Show menu on bottom elements (meaning without children) with text
     $('body :not(:has(*))').on('contextmenu', function(e) {
@@ -33,12 +32,13 @@ $(function() {
         }
     });
     //When clicking an option change the weight/style/color of the font accordingly
-    $menu.children().not(':has(ul)').click(function() {
+    $menu.children().click(function() {
         var txt = this.innerHTML.toLowerCase();
+        var value = txt.startsWith('un') ? 'normal' : txt;
         if (txt.endsWith('bold'))
-            target.style.fontWeight = txt.startsWith('un') ? 'normal' : txt;
+            target.style.fontWeight = value;
         else if (txt.endsWith('italic'))
-            target.style.fontStyle = txt.startsWith('un') ? 'normal' : txt;
+            target.style.fontStyle = value;
     });
     $('#changeColor li').click(function() {
         target.style.color = this.innerHTML.toLowerCase();
