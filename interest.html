@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="This site will tell you all you need to know about fennec foxes.">
+    <meta name="keywords" content="fennec fox, general information">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dygraph/2.1.0/dygraph.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dygraph/2.1.0/dygraph.min.css">
+    <script src="script.js"></script>
+    <script src="graph.js"></script>
+    <link rel="stylesheet" href= "style.css">
+    <title>Fennec Fox - Search Interest</title>
+  </head>
+  <body>
+    <header>
+      <img src="images/header.png" alt="fennec fox eyes">
+    </header>
+    <nav>
+      <ul>
+        <li><a href="index.html">General Information</a></li>
+        <li><a href="characteristics.html">Physical Characteristics</a></li>
+        <li><a href="habitat.html">Habitat</a></li>
+        <li><a href="behavior.html">Social Behavior and Diet</a></li>
+        <li><a href="pets.html">As Pets</a></li>
+        <li><a href="interest.html">Search Interest</a></li>
+      </ul>
+    </nav>
+    <article>
+      <h1>Search Interest</h1>
+      <figure>
+        <div id="graph"></div>
+        <figcaption>
+          <p>A graph showing the search interest in fennec foxes compared to red foxes over time.<span class="source">
+          (<a href="https://trends.google.com/trends/explore?q=fennec%20fox,red%20fox">source</a>)</span></p>
+          <p>Click to zoom in <input id="zoom" type="number" value="2" min="0" size="3">x, or click and drag to zoom.
+          Double click to zoom back.</p>
+        </figcaption>
+      </figure>
+      <p>As can be seen in the graph, people are more interested in red foxes than fennec foxes. One of the goals of this
+      site is to change that, and to make them see that fennecs are the superior type of fox.</p>
+    </article>
+    <footer>
+      <p>Made by Timo & Fabian.</p>
+      <p>The source of the article is <a href="https://en.wikipedia.org/wiki/Fennec_fox">Wikipedia</a>. The header image
+      is from <a href="https://kids.nationalgeographic.com/animals/fennec-fox/#fennec-fox-sitting.jpg">here</a>.</p>
+    </footer>
+    <ul class="hidden customContextMenu">
+      <li>Bold</li>
+      <li>Unbold</li>
+      <li>Italic</li>
+      <li>Unitalic</li>
+      <li id="changeColor">Change color
+        <ul>
+          <li>Black</li>
+          <li>Gray</li>
+          <li>Brown</li>
+          <li>White</li>
+        </ul>
+      </li>
+    </ul>
+  </body>
+</html>

@@ -1,4 +1,6 @@
-Week,Fennec Fox,Red Fox
+$(function() {
+    //File had to be written in JavaScript because Chrome refuses to load it if it isn't from a server.
+    new Dygraph(document.getElementById('graph'), `Week,Fennec Fox,Red Fox
 2017-03-05,25,83
 2017-03-12,29,80
 2017-03-19,26,87
@@ -51,3 +53,13 @@ Week,Fennec Fox,Red Fox
 2018-02-11,19,79
 2018-02-18,23,81
 2018-02-25,23,83
+`, {
+        colors: ['chocolate', 'red'], //colors that look like fennec and red foxes and are visible on a white background
+        clickCallback: function(_, x) {
+            //Zoom when clicked, read from #zoom how much if value is a number that's not 0, otherwise use 2
+            var curRange = this.xAxisRange();
+            var newRange = (curRange[1] - curRange[0]) / (Math.abs($('#zoom').val()) * 2 || 4);
+            this.updateOptions({dateWindow: [x - newRange, x + newRange]});
+        }
+    });
+});

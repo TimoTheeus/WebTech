@@ -11,54 +11,36 @@ $(function() {
         });
         $('article').before($toc);
     }
-    if (typeof Dygraph == 'function')
-        new Dygraph(document.getElementById('graph'), 'Fennec_vs_Red.csv', {
-            colors: ['chocolate', 'red'],
-            clickCallback: function(_, x) {
-                var curRange = this.xAxisRange();
-                var newRange = (curRange[1] - curRange[0]) / ((Math.abs($('#zoom').val()) || 2) * 2);
-                this.updateOptions({dateWindow: [x - newRange, x + newRange]});
-            }
-    });
-});
-$(document).ready(function(){
-
+    
+    var $menu = $('.customContextMenu');
     //When clicking anywhere on the page that is not the contextmenu, hide the custom contextmenu
-    $(document).click(function(){
-            $(document.getElementsByClassName("customContextMenu")).addClass("hidden").removeClass("show");
+    function hideMenu() {
+        $menu.addClass('hidden');
+    }
+    document.addEventListener('click', hideMenu);
+    //Right clicking should hide it as well, but in the capturing phase in case it opens up again in bubbling
+    document.addEventListener('contextmenu', hideMenu, true);
+    var target;
+    //Show menu on bottom elements (meaning without children) with text
+    $('body :not(:has(*))').on('contextmenu', function(e) {
+        if (/\S/.test($(this).text()))
+        {
+            //Prevent the default context menu
+            e.preventDefault();
+            //Show the contextmenu at mouse position
+            $menu.css({top: e.pageY, left: e.pageX}).removeClass('hidden');
+            target = e.target; //save element to be changed
+        }
     });
-    //when right clicking on a piece of text in an article
-    $("article p, article h1, article h2").on('contextmenu', e => {
-        //prevent the default context menu
-        e.preventDefault();
-        //show the contextmenu
-        $(document.getElementsByClassName("customContextMenu")).addClass("show").removeClass("hidden");
-        //Change position relative to mouse position
-        $(document.getElementsByClassName("customContextMenu")).css('top',e.pageY);
-        $(document.getElementsByClassName("customContextMenu")).css('left',e.pageX);
-        //When clicking an option change the weight/style/color of the font accordingly
-        $("#bold").click(function(){
-            $(e.target).css("font-weight","bold");
-        });
-        $("#unBold").click(function(){
-            $(e.target).css("font-weight","normal");
-        });
-        $("#italic").click(function(){
-            $(e.target).css("font-style","italic");
-        });
-        $("#unItalic").click(function(){
-            $(e.target).css("font-style","normal");
-        });
-        $("#changeBlack").click(function(){
-            $(e.target).css("color",'black');
-        });
-        $("#changeGrey").click(function(){
-            $(e.target).css("color",'#696969');
-        });
-        $("#changeBrown").click(function(){
-            $(e.target).css("color",'brown');
-        });
+    //When clicking an option change the weight/style/color of the font accordingly
+    $menu.children().not(':has(ul)').click(function() {
+        var txt = this.innerHTML.toLowerCase();
+        if (txt.endsWith('bold'))
+            target.style.fontWeight = txt.startsWith('un') ? 'normal' : txt;
+        else if (txt.endsWith('italic'))
+            target.style.fontStyle = txt.startsWith('un') ? 'normal' : txt;
+    });
+    $('#changeColor li').click(function() {
+        target.style.color = this.innerHTML.toLowerCase();
     });
 });
-
-
