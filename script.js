@@ -19,20 +19,40 @@ $(function() {
     //When clicking anywhere on the page that is not the contextmenu, hide the custom contextmenu
     //Right clicking should hide it as well, but in the capturing phase in case it opens up again in bubbling
     ['click', 'contextmenu'].forEach(x => document.addEventListener(x, hideMenu, true));
-    var target;
+    //target, range;
+    copied = '';
     //Show menu on bottom elements (meaning without children) with text
     $('body :not(:has(*))').on('contextmenu', function(e) {
         if (/\S/.test($(this).text()))
         {
             //Prevent the default context menu
             e.preventDefault();
+            target = this; //save element to be changed
+            //Get selected range, or range at the clicked point.
+            range = getSelection().getRangeAt(0);
+            if (range.collapsed)
+                range = document.caretRangeFromPoint(e.clientX, e.clientY); //doesn't work in Firefox, needs fix. :(
             //Show the contextmenu at mouse position
             $menu.css({top: e.pageY, left: e.pageX}).removeClass('hidden');
-            target = e.target; //save element to be changed
         }
     });
-    //When clicking an option change the weight/style/color of the font accordingly
-    $menu.children().click(function() {
+    //When clicking on copy/cut/paste:
+    $('#editRange li').click(function() {
+        var txt = range.toString();
+        switch (this.innerHTML.toLowerCase()) {
+            case 'cut':
+                range.deleteContents();
+            case 'copy':
+                copied = txt;
+                break;
+            case 'paste':
+                range.deleteContents();
+                range.insertNode(new Text(copied));
+                break;
+        }
+    });
+    //When clicking a css option change the weight/style/color of the font accordingly
+    $('#changeStyle li').click(function() {
         var txt = this.innerHTML.toLowerCase();
         var value = txt.startsWith('un') ? 'normal' : txt;
         if (txt.endsWith('bold'))

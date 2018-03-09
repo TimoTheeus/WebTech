@@ -124,14 +124,16 @@ aside {
     color: white;
 }
 
-#changeColor ul {
+.customContextMenu li > ul {
     display: none;
     position: absolute;
-    padding: 0px;
+    left: 160px;
+    top: -1px;
+    padding: 0;
     border: none;
 }
 
-#changeColor:hover ul {
+.customContextMenu li:hover > ul {
     display:block;
 }
 
