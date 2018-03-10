@@ -1,8 +1,8 @@
 $(document).ready(function(){
     if($('body').hasClass('knowledgeBase')){
-        loadHeaderImage();
+        //loadHeaderImage();
         //load the navigation bar
-        loadNavigation();
+        //loadNavigation();
         
         //initialise a list for the main subjects in the knowledge base
         var knowledgeList = document.createElement("ul");
@@ -59,7 +59,9 @@ const pageTitles = ["General Information","Physical Characteristics","Habitat","
 
 function createElement(tag,id,text,link){
     var e = document.createElement(tag);
+    if(id!=''){ 
     e.id = id;
+    }
     if(tag == 'a'){
         e.href = link;
     }

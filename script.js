@@ -74,3 +74,4 @@ $(function() {
         target.style.color = this.innerHTML.toLowerCase();
     });
 });
+
