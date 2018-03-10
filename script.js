@@ -19,8 +19,8 @@ $(function() {
     //When clicking anywhere on the page that is not the contextmenu, hide the custom contextmenu
     //Right clicking should hide it as well, but in the capturing phase in case it opens up again in bubbling
     ['click', 'contextmenu'].forEach(x => document.addEventListener(x, hideMenu, true));
-    //target, range;
-    copied = '';
+    var target, range;
+    var copied = '';
     //Show menu on bottom elements (meaning without children) with text
     $('body :not(:has(*))').on('contextmenu', function(e) {
         if (/\S/.test($(this).text()))
@@ -29,9 +29,19 @@ $(function() {
             e.preventDefault();
             target = this; //save element to be changed
             //Get selected range, or range at the clicked point.
-            range = getSelection().getRangeAt(0);
-            if (range.collapsed)
-                range = document.caretRangeFromPoint(e.clientX, e.clientY); //doesn't work in Firefox, needs fix. :(
+            if (getSelection().isCollapsed)
+            {
+                if (document.caretRangeFromPoint)
+                    range = document.caretRangeFromPoint(e.clientX, e.clientY); //doesn't work in Firefox :(
+                else if (document.caretPositionFromPoint) {
+                    var pos = document.caretPositionFromPoint(e.clientX, e.clientY);
+                    range = new Range();
+                    range.setStart(pos.offsetNode, pos.offset);
+                    range.setEnd(pos.offsetNode, pos.offset);
+                }
+            }
+            else
+                range = getSelection().getRangeAt(0);
             //Show the contextmenu at mouse position
             $menu.css({top: e.pageY, left: e.pageX}).removeClass('hidden');
         }
