@@ -8,7 +8,6 @@ $(document).ready(function(){
         });
         behaviors.forEach(function(behavior) 
         {
-            behavior.writeLog();
             var div = behavior.extendedContentObject;
             document.getElementById("behaviorList").appendChild(div);
             addClickInteraction(behavior.titleId,behavior.contentId);
@@ -67,9 +66,6 @@ class Topic{
         this.titleId = "";
         this.content = "";
         this.contentId = "";
-    }
-    writeLog(){
-        console.log(this.title);
     }
     get extendedContentObject(){
         var div = document.createElement("div");
