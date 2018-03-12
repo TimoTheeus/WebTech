@@ -1,62 +1,49 @@
 $(document).ready(function(){
     if($('body').hasClass('knowledgeBase')){
-        //loadHeaderImage();
-        //load the navigation bar
-        //loadNavigation();
-        
-        //initialise a list for the main subjects in the knowledge base
-        var knowledgeList = document.createElement("ul");
-        //Create and load the behavior links
-        var behaviorDiv = document.createElement("div");
-        var behaviorHeader = document.createElement("h2");
-        var behaviorLink = createElement('a','behaviorLink','Behavior','#');
-        var behaviorList = createElement("ul","behaviorList","","");
-        behaviorList.className += " hidden";
-        behaviorHeader.appendChild(behaviorLink);
-        behaviorDiv.appendChild(behaviorHeader);
-        behaviorDiv.appendChild(behaviorList);
-        var entry = document.createElement("li").appendChild(behaviorDiv);
-        knowledgeList.appendChild(entry);
-        $('body').append(knowledgeList);
-        $('#behaviorLink').click(function(){
-            $('#behaviorList').toggleClass('hidden');
+        initialiseHeaders();
+        characteristics.forEach(function(char){
+            var div = char.extendedContentObject;
+            document.getElementById("characList").appendChild(div);
+            addClickInteraction(char.titleId,char.contentId);
         });
         behaviors.forEach(function(behavior) 
         {
-            var div = document.createElement("div");
-            var link = createElement('a',behavior.titleId,behavior.title,'#');
-            div.appendChild(link);
-            var content = createElement('p',behavior.contentId,behavior.content,"",'hidden');
-            content.className += " hidden";
-            div.appendChild(content);
-            behaviorList.appendChild(div);
-
-            $('#'+behavior.titleId).click(function(){
-                behavior.extendDescription();
-            });
+            behavior.writeLog();
+            var div = behavior.extendedContentObject;
+            document.getElementById("behaviorList").appendChild(div);
+            addClickInteraction(behavior.titleId,behavior.contentId);
         });
     }
 });
-function loadHeaderImage(){
-    var image = document.createElement("img");
-    image.setAttribute("src","images/header.png");
-    var header = document.createElement("header");
-    header.appendChild(image);
-    $('body').append(header);
+function initialiseHeaders(){
+    //initialise a list for the main topics in the knowledge base
+    var knowledgeList = document.createElement("ul");
+    //Create link entries for the main topics
+    general = new General();
+    var generalEntry = general.extendedContentObject;
+    var behaviorEntry= createTopicHeader("behaviorLink","Behavior","behaviorList");
+    var characEntry = createTopicHeader("characLink","Physical Characteristics","characList");
+    knowledgeList.appendChild(generalEntry);
+    knowledgeList.appendChild(characEntry);
+    knowledgeList.appendChild(behaviorEntry);
+    $('body').append(knowledgeList);
+    addClickInteraction(general.titleId,general.contentId);
+    addClickInteraction("characLink","characList");
+    addClickInteraction("behaviorLink","behaviorList");
 }
-function loadNavigation(){
-    var navigation = document.createElement("nav");
-    navigation.appendChild(document.createElement("ul"));
-    for(i=0; i<pageSources.length;i++){ 
-        var liElement = document.createElement("li");
-        liElement.appendChild(createElement('a','',pageTitles[i],pageSources[i] + '.html'));
-        navigation.firstChild.appendChild(liElement);
-    }
-    $('body').append(navigation);
-}
-const pageSources = ["index","characteristics","habitat","behavior","pets","interest","knowledgebase"];
-const pageTitles = ["General Information","Physical Characteristics","Habitat","Social Behavior and Diet","As Pets","Search Interest","Knowledge Base"];
 
+function createTopicHeader(linkId,headerTitle,listId,){
+    var div = document.createElement("div");
+    var header = document.createElement("h2");
+    var link = createElement('a',linkId,headerTitle,'#');
+    var list = createElement("ul",listId,"","");
+    list.className += " hidden";
+    header.appendChild(link);
+    div.appendChild(header);
+    div.appendChild(list);
+    var entry = document.createElement("li").appendChild(div);
+    return entry;
+}
 function createElement(tag,id,text,link){
     var e = document.createElement(tag);
     if(id!=''){ 
@@ -69,24 +56,118 @@ function createElement(tag,id,text,link){
     return e;
 }
 
-const characteristics = {
-    weight:"0.68-1.59kg",
-    length:"24–41 cm",
-    tailLength:"18-31cm",
-    height:"~20.3cm"
+function addClickInteraction(titleId, contentId){
+    $('#'+titleId).click(function(){
+        $('#'+contentId).toggleClass('hidden');
+    });
 }
-class Behavior{
+class Topic{
+    constructor(){
+        this.title = "";
+        this.titleId = "";
+        this.content = "";
+        this.contentId = "";
+    }
+    writeLog(){
+        console.log(this.title);
+    }
+    get extendedContentObject(){
+        var div = document.createElement("div");
+        var link = createElement('a',this.titleId,this.title,'#');
+        div.appendChild(link);
+        var content = createElement('p',this.contentId,this.content,"");
+        content.className += " hidden";
+        div.appendChild(content);
+        return div;
+    }
+}
+class General extends Topic{
+    constructor(){
+        super();
+        this.title = "General Information";
+        this.titleId = "general"
+        this.content = "The fennec fox or fennec (Vulpes zerda) is a small nocturnal fox found in the Sahara of North Africa, the Sinai\
+         Peninsula and the Arabian desert. Its most distinctive feature is its unusually large ears. The fennec is the smallest species\
+          of canid. Its coat, ears, and kidney functions have adapted to high-temperature, low-water, desert environments. Also, its \
+          hearing is sensitive enough to hear prey moving underground. It mainly eats insects, small mammals, and birds.The fennec has\
+           a life span of up to 14 years in captivity. Its main predators are the African varieties of eagle owl. Families of fennecs \
+           dig out dens in the sand for habitation and protection, which can be as large as 120 m² (1,292 sq ft) and adjoin the dens \
+           of other families.";
+        this.contentId = "characteristicsContent"
+    }
+    get extendedContentObject(){
+        var div = document.createElement("div");
+        var header = document.createElement("h2");
+        var link = createElement('a',this.titleId,this.title,'#');
+        header.appendChild(link);
+        div.appendChild(header);
+        var content = createElement('p',this.contentId,this.content,"");
+        content.className += " hidden";
+        div.appendChild(content);
+        return div;
+    }
+}
+class Characteristics extends Topic{
+    
+    constructor(){
+        super();
+        this.title = "Characteristics";
+        this.titleId = "characteristics"
+        this.content = "";
+        this.contentId = "characteristicsContent"
+    }
+}
+
+class Appearance extends Characteristics{
+    
+    constructor(){
+        super();
+        this.title = "Appearance";
+        this.titleId = "appearance"
+        this.content = "The coat is often a cream color and fluffy. The fennec's characteristic ears are the largest among all \
+        foxes relative to body size. The soles of its feet are protected from the hot desert sand by thick fur."
+        this.contentId = "appearanceContent"
+    }
+}
+class Measurements extends Characteristics{
+    constructor(){
+        super();
+        this.title = "Measurements";
+        this.titleId = "measurements"
+        this.content = measurements;
+        this.contentId = "measurementsContent"
+    }
+    get extendedContentObject(){
+            var div = document.createElement("div");
+            var link = createElement('a',this.titleId,this.title,'#');
+            div.appendChild(link);
+            var table = document.createElement("table");
+            table.className += " hidden";
+            table.id= this.contentId;
+            for(var i =0;i<measurements.length;i++){
+                var row = "<tr><td>"+measurements[i].key + "</td><td>"+measurements[i].value+"</td></tr>";
+                table.innerHTML+=row;
+            }
+            div.appendChild(table);
+            return div;
+    }
+}
+
+const measurements = [{key:"weight",value:"0.68-1.59kg"},{key:"length",value:"24-41m"},{key:"tailLength",value:"18-31cm"},
+{key:"height",value:"~20.3cm"}];
+
+class Behavior extends Topic{
 
    constructor(){
+    super();
     this.title = "Behavior"; 
     this.titleId = "behavior";
     this.content = null;
     this.contentId = "behaviorDescription"
    }
-    extendDescription(){
-        $('#'+this.contentId).toggleClass('hidden');
-    }
+
 }
+
 class Social extends Behavior{
 
     constructor(){
@@ -97,8 +178,7 @@ class Social extends Behavior{
         this.content = "Captive animals engage in highly social behaviors, typically resting while in contact with each other. \
         Males tend to show more aggression and urine-marking around the time of the females' estrous cycle. They have been seen to \
         bury feces by pushing soil with their noses or hind feet when in captivity. Much remains unknown of their basic ecology and \
-        behavior in the wild, and a 2004 report by the International Union for Conservation of Nature stated that \"in-depth study \
-        of the species, with particular emphasis on habitat use and population dynamics in the wild, is overdue.\"";
+        behavior in the wild.";
     }
 }
 class DietAndHunting extends Behavior{
@@ -128,3 +208,4 @@ class Reproduction extends Behavior{
         }
 }
 const behaviors = [new Social(),new DietAndHunting(), new Reproduction()];
+const characteristics = [new Appearance(),new Measurements()];
