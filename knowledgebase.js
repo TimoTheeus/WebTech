@@ -1,17 +1,10 @@
 $(document).ready(function(){
     if($('body').hasClass('knowledgeBase')){
         initialiseHeaders();
-        characteristics.forEach(function(char){
-            var div = char.extendedContentObject;
-            document.getElementById("characList").appendChild(div);
-            addClickInteraction(char.titleId,char.contentId);
-        });
-        behaviors.forEach(function(behavior) 
-        {
-            var div = behavior.extendedContentObject;
-            document.getElementById("behaviorList").appendChild(div);
-            addClickInteraction(behavior.titleId,behavior.contentId);
-        });
+        addSubTopics(characteristics, "characList");
+        addSubTopics(habitat,"habitatList");
+        addSubTopics(behaviors,"behaviorList");
+        addSubTopics(pets,"petsList");
     }
 });
 function initialiseHeaders(){
@@ -20,25 +13,39 @@ function initialiseHeaders(){
     //Create link entries for the main topics
     general = new General();
     var generalEntry = general.extendedContentObject;
+    var habitatEntry= createTopicHeader("habitatLink","Habitat","habitatList");
     var behaviorEntry= createTopicHeader("behaviorLink","Behavior","behaviorList");
     var characEntry = createTopicHeader("characLink","Physical Characteristics","characList");
+    var petsEntry = createTopicHeader("petsLink","Pets",'petsList');
     knowledgeList.appendChild(generalEntry);
     knowledgeList.appendChild(characEntry);
+    knowledgeList.appendChild(habitatEntry);
     knowledgeList.appendChild(behaviorEntry);
+    knowledgeList.appendChild(petsEntry);
     $('body').append(knowledgeList);
     addClickInteraction(general.titleId,general.contentId);
     addClickInteraction("characLink","characList");
+    addClickInteraction("habitatLink","habitatList");
     addClickInteraction("behaviorLink","behaviorList");
+    addClickInteraction("petsLink","petsList");
 }
 
+function addSubTopics(array,parentListId){
+    array.forEach(function(subTopic) 
+        {
+            var div = subTopic.extendedContentObject;
+            document.getElementById(parentListId).appendChild(div);
+            addClickInteraction(subTopic.titleId,subTopic.contentId);
+        });
+}
 function createTopicHeader(linkId,headerTitle,listId,){
     var div = document.createElement("div");
     var header = document.createElement("h2");
     var link = createElement('a',linkId,headerTitle,'#');
-    var list = createElement("ul",listId,"","");
-    list.className += " hidden";
     header.appendChild(link);
     div.appendChild(header);
+    var list = createElement("ul",listId,"","");
+    list.className += " hidden";
     div.appendChild(list);
     var entry = document.createElement("li").appendChild(div);
     return entry;
@@ -103,8 +110,53 @@ class General extends Topic{
         return div;
     }
 }
+class Habitat extends Topic{
+}
+class Region extends Habitat{
+    constructor(){
+        super();
+        this.title = "Region";
+        this.titleId = "region"
+        this.contentId = "regionContent"
+    }
+    get extendedContentObject(){
+        var div = document.createElement("div");
+        var link = createElement('a',this.titleId,this.title,'#');
+        div.appendChild(link);
+        var content = document.createElement("figure");
+        var image = document.createElement("img");
+        image.setAttribute("src","images/location.png");
+        var caption = createElement("figcaption",'',"The fennec fox lives in North Africa",'');
+        content.appendChild(image);
+        content.appendChild(caption);
+        content.id = this.contentId;
+        content.className += " hidden";
+        div.appendChild(content);
+        return div;
+    }
+}
+class Population extends Habitat{
+    constructor(){
+        super();
+        this.title = "Population";
+        this.titleId = "population"
+        this.content = "The fennec fox is classified as \"least concern\" on the IUCN Red List, and as a CITES Appendix II species: \
+        species not necessarily threatened with extinction, but whose trade must be controlled to avoid utilization incompatible with \
+        their survival."
+        this.contentId = "populationContent"
+    }
+}
+class Predators extends Habitat{
+    constructor(){
+        super();
+        this.title = "Predators";
+        this.titleId = "predators"
+        this.content = "The fennec fox's main predators are the various African varieties of eagle owl. Other possible predators include \
+        caracals, jackals, striped hyenas, and the saluki, a greyhound-like domestic dog local to the area."
+        this.contentId = "predatorsContent"
+    }
+}
 class Characteristics extends Topic{
-    
     constructor(){
         super();
         this.title = "Characteristics";
@@ -203,5 +255,19 @@ class Reproduction extends Behavior{
         this.titleId = "reproductionId"
         }
 }
+class Pets extends Topic{
+    constructor(){
+        super();
+        this.content = "The species is classified a \"small wild/exotic canid\" by the United States Department of Agriculture, \
+        along with the coyote, dingo, jackal, and Arctic fox, and is considered the only species of fox, other than the Russian \
+        domesticated red fox, which can properly be kept as a pet. Although it cannot be considered domesticated, it can be kept\
+         in a domestic setting similar to dogs or cats.";
+        this.contentId = "petsContent";
+        this.title = "Fennec Foxes As Pets";
+        this.titleId = "petsId"
+        }
+}
+const pets = [new Pets()];
+const habitat = [new Region(), new Population(), new Predators()];
 const behaviors = [new Social(),new DietAndHunting(), new Reproduction()];
 const characteristics = [new Appearance(),new Measurements()];
