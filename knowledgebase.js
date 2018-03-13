@@ -68,7 +68,7 @@ class General extends Topic {
         this.contentId = 'characteristicsContent';
     }
     get extendedContentObject() {
-        return $('<div>').append($('<h2>').append(createElement('a', this.titleId, this.title)))
+        return $('<li>').append($('<div>').append($('<h2>').append(createElement('a', this.titleId, this.title))))
             .append(createElement('p', this.contentId, this.content).addClass('hidden'));
     }
 }
