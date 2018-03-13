@@ -30,6 +30,9 @@ function createTopicHeader(linkId, headerTitle, listId) {
     return $('<li>').append($('<div>').append($header).append($list));
 }
 function createElement(tag,id,text) {
+    if(tag == 'a'){
+        tag+= ' href="javascript:void(0);"'
+    }
     return $('<' + tag + '>').attr('id', id).text(text);
 }
 

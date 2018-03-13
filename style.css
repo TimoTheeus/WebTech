@@ -137,7 +137,10 @@ aside {
     display:block;
 }
 
+.knowledgebase{
+    border: 1px solid black;
+    margin-right:40%;
+}
 iframe {
     border: 0;
-}
 }
