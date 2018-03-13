@@ -24,11 +24,13 @@ function addSubTopics(array, parentListId) {
         addClickInteraction(subTopic.titleId,subTopic.contentId);
     });
 }
+//create a list item with a link inside the header
 function createTopicHeader(linkId, headerTitle, listId) {
     var $header = $('<h2>').append(createElement('a', linkId, headerTitle));
     var $list = $('<ul>').attr('id', listId).addClass('hidden')
     return $('<li>').append($('<div>').append($header).append($list));
 }
+//create an element and define its id and text content
 function createElement(tag,id,text) {
     $element = $('<' + tag + '>').attr('id', id).text(text);
     if(tag == 'a'){
@@ -37,6 +39,7 @@ function createElement(tag,id,text) {
     return $element
 }
 
+//Add click interaction that hides/shows the content when clicking on the title
 function addClickInteraction(titleId, contentId) {
     $('#'+titleId).click(function(){
         $('#'+contentId).toggleClass('hidden');
@@ -49,6 +52,7 @@ class Topic {
         this.content = "";
         this.contentId = "";
     }
+    //a default content object for a topic
     get extendedContentObject() {
         return $('<div>').append(createElement('a', this.titleId, this.title))
             .append(createElement('p', this.contentId, this.content).addClass('hidden'));
@@ -82,6 +86,7 @@ class Region extends Habitat {
         this.titleId = 'region';
         this.contentId = 'regionContent';
     }
+    //change the default content object to a figure
     get extendedContentObject(){
         var $figure = $('<figure>').append($('<img>').attr('src', 'images/location.png'))
             .append('<figcaption>The fennec fox lives in North Africa</figcaption>')
@@ -143,6 +148,7 @@ class Measurements extends Characteristics {
         };
         this.contentId = 'measurementsContent';
     }
+    //change the default content object to a table
     get extendedContentObject() {
         var $table = $('<table>').attr('id', this.contentId).addClass('hidden');
         Object.keys(this.content).forEach(key =>
