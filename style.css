@@ -138,12 +138,9 @@ aside {
 }
 
 .knowledgebase {
+	margin-top:10px;
     border: 1px solid black;
     margin-right: 40%;
-}
-
-.knowledgebase ul {
-    list-style-type: none;
 }
 
 iframe {

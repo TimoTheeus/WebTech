@@ -30,10 +30,11 @@ function createTopicHeader(linkId, headerTitle, listId) {
     return $('<li>').append($('<div>').append($header).append($list));
 }
 function createElement(tag,id,text) {
+    $element = $('<' + tag + '>').attr('id', id).text(text);
     if(tag == 'a'){
-        tag+= ' href="javascript:void(0);"'
+        $element.attr('href', 'javascript:void(0);');
     }
-    return $('<' + tag + '>').attr('id', id).text(text);
+    return $element
 }
 
 function addClickInteraction(titleId, contentId) {
@@ -68,7 +69,7 @@ class General extends Topic {
         this.contentId = 'characteristicsContent';
     }
     get extendedContentObject() {
-        return $('<div>').append($('<h2>').append(createElement('a', this.titleId, this.title)))
+        return $('<li>').append($('<div>').append($('<h2>').append(createElement('a', this.titleId, this.title))))
             .append(createElement('p', this.contentId, this.content).addClass('hidden'));
     }
 }
