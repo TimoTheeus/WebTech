@@ -1,5 +1,7 @@
 $(function() {
+    //Add active class to link to current page
     $('a[href="' + location.pathname.split('/').pop() + '"]').addClass('active');
+    //Create a table of contents if there are sub-headers, except on the KB page.
     var $h2s = $('article:not(.knowledgebase) h2');
     if ($h2s.length > 0) {
         var $toc = $('<section>').attr('id', 'toc').html('<h3>Contents</h3>');
@@ -11,7 +13,7 @@ $(function() {
         });
         $('article').before($toc);
     }
-    
+    //Custom context menu
     var $menu = $('.customContextMenu');
     function hideMenu() {
         $menu.addClass('hidden');
